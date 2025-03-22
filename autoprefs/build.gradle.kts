@@ -25,9 +25,7 @@ android {
 
     defaultConfig {
         minSdk = 26
-
         buildConfigField("String", "VERSION_NAME", "\"$libraryVersion\"")
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -123,39 +121,38 @@ publishing {
         }
     }
 
-    repositories {
-        maven {
-            name = "localRelease"
-            url = uri("${layout.buildDirectory}/repos/releases")
-        }
-
-        maven {
-            name = "OSSRH"
-            url = uri(
-                if (version.toString().endsWith("SNAPSHOT")) {
-                    "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-                } else {
-                    "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-                }
-            )
-
-            credentials {
-                username = secretProps.getProperty("ossrhUsername", "")
-                password = secretProps.getProperty("ossrhPassword", "")
-            }
-        }
-    }
+//    repositories {
+//        maven {
+//            name = "localRelease"
+//            url = uri("${layout.buildDirectory}/repos/releases")
+//        }
+//
+//        maven {
+//            name = "OSSRH"
+//            url = uri(
+//                if (version.toString().endsWith("SNAPSHOT")) {
+//                    "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+//                } else {
+//                    "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+//                }
+//            )
+//
+//            credentials {
+//                username = secretProps.getProperty("ossrhUsername", "")
+//                password = secretProps.getProperty("ossrhPassword", "")
+//            }
+//        }
+//    }
 }
 
 signing {
-    setRequired({ gradle.taskGraph.hasTask("publish") })
-
     val signingKey = secretProps.getProperty("signing.key", "")
     val signingPassword = secretProps.getProperty("signing.password", "")
 
     if (signingKey.isNotEmpty() && signingPassword.isNotEmpty()) {
         useInMemoryPgpKeys(signingKey, signingPassword)
+    } else {
+        useGpgCmd()
     }
-
     sign(publishing.publications["release"])
 }
