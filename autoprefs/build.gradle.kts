@@ -146,18 +146,38 @@ signing {
 }
 
 tasks.register<Zip>("createBundle") {
-    dependsOn("assemble", "publishToMavenLocal")
+    dependsOn("clean", "assemble", "publishToMavenLocal", "generateChecksums")
 
     archiveFileName.set("autoprefs-${libraryVersion}-bundle.zip")
     destinationDirectory.set(layout.buildDirectory.dir("distributions"))
 
-    from(file("${System.getProperty("user.home")}/.m2/repository/io/github/zahid4kh/autoprefs/${libraryVersion}")) {
-        include("**/*")
+    from(file("${System.getProperty("user.home")}/.m2/repository")) {
+        include("io/github/zahid4kh/autoprefs/${libraryVersion}/**")
     }
 
     doLast {
         println("====================================")
         println("Bundle created at: ${archiveFile.get().asFile.absolutePath}")
         println("====================================")
+    }
+}
+
+tasks.register("generateChecksums") {
+    doLast {
+        val repoDir = file("${System.getProperty("user.home")}/.m2/repository/io/github/zahid4kh/autoprefs/${libraryVersion}")
+
+        repoDir.listFiles()?.forEach { file ->
+            if (file.isFile && !file.name.endsWith(".md5") && !file.name.endsWith(".sha1")) {
+                // Generate MD5
+                ant.withGroovyBuilder {
+                    "checksum"("file" to file.absolutePath, "algorithm" to "MD5", "fileext" to ".md5")
+                }
+
+                // Generate SHA1
+                ant.withGroovyBuilder {
+                    "checksum"("file" to file.absolutePath, "algorithm" to "SHA1", "fileext" to ".sha1")
+                }
+            }
+        }
     }
 }
