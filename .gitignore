@@ -13,5 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+version.properties
 /.idea
 /app
