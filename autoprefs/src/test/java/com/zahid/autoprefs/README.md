@@ -27,6 +27,15 @@ This allows the AutoPrefs delegate functionality to be tested without Android de
 
 You can use this same approach to unit test your classes that use AutoPrefs:
 
+Add this to your `build.gradle.kts`:
+
+```kotlin
+testOptions {
+    unitTests.isReturnDefaultValues = true
+}
+```
+
+
 ```kotlin
 @Test
 fun testMyClassWithAutoPrefs() {
@@ -41,3 +50,4 @@ fun testMyClassWithAutoPrefs() {
     myClass.saveUserName("TestUser")
     assertEquals("TestUser", myClass.getUserName())
 }
+```
