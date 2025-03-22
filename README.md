@@ -1,8 +1,9 @@
 # AutoPrefs
 
-[![](https://jitpack.io/v/zahid4kh/autoprefs.svg)](https://jitpack.io/#zahid4kh/autoprefs)  
-[](https://central.sonatype.com/artifact/io.github.zahid4kh/autoprefs)  
+[![](https://jitpack.io/v/zahid4kh/autoprefs.svg)](https://jitpack.io/#zahid4kh/autoprefs)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.zahid4kh/autoprefs)](https://central.sonatype.com/artifact/io.github.zahid4kh/autoprefs)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 
 A lightweight, Kotlin-idiomatic library to simplify working with `SharedPreferences` in Android apps. AutoPrefs eliminates boilerplate by using property delegation, supports type-safe operations, and offers advanced features like custom object serialization and asynchronous writes.
 
@@ -22,8 +23,9 @@ A lightweight, Kotlin-idiomatic library to simplify working with `SharedPreferen
 Add the dependency to your `build.gradle.kts`:
 
 ```kotlin
-dependencies {  
- implementation("io.github.zahid4kh:autoprefs:1.0.2")}  
+dependencies {
+    implementation("io.github.zahid4kh:autoprefs:1.0.2")
+}
 ```
 
 ### Option 2: JitPack
@@ -32,16 +34,18 @@ Add JitPack repository to your `settings.gradle.kts`:
 
 ```kotlin
 dependencyResolutionManagement {  
- repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS) repositories {  
- mavenCentral() maven { url = uri("https://jitpack.io") }  
- }}  
+   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS) repositories {  
+     mavenCentral() maven { url = uri("https://jitpack.io") }  
+   }
+}  
 ```
 
 Then add the dependency:
 
 ```kotlin
 dependencies {  
- implementation("com.github.zahid4kh:autoprefs:v1.0.2")}  
+    implementation("com.github.zahid4kh:autoprefs:v1.0.2")
+}  
 ```
 
 ## Usage
