@@ -135,15 +135,19 @@ publishing {
 }
 
 signing {
-    val signingKeyFile = rootProject.file("private_key.gpg")
-    val signingPassword = secretProps.getProperty("signing.password", "")
+    val isJitPackBuild = System.getenv("JITPACK") == "true"
 
-    if (signingKeyFile.exists()) {
-        useInMemoryPgpKeys(signingKeyFile.readText(), signingPassword)
-    } else {
-        useGpgCmd()
+    if (!isJitPackBuild) {
+        val signingKeyFile = rootProject.file("private_key.gpg")
+        val signingPassword = secretProps.getProperty("signing.password", "")
+
+        if (signingKeyFile.exists()) {
+            useInMemoryPgpKeys(signingKeyFile.readText(), signingPassword)
+        } else {
+            useGpgCmd()
+        }
+        sign(publishing.publications["release"])
     }
-    sign(publishing.publications["release"])
 }
 
 tasks.register<Zip>("createBundle") {

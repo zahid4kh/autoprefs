@@ -24,7 +24,7 @@ Add the dependency to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.zahid:autoprefs:1.0.0")
+    implementation("com.zahid:autoprefs:1.0.2")
 }
 ```
 
@@ -34,8 +34,9 @@ Add JitPack repository to your `settings.gradle.kts`:
 
 ```kotlin
 dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        // ...
+        mavenCentral()
         maven { url = uri("https://jitpack.io") }
     }
 }
@@ -45,6 +46,6 @@ Then add the dependency:
 
 ```kotlin
 dependencies {
-    implementation("com.github.zahid4kh:autoprefs:1.0.0")
+    implementation("com.github.zahid4kh:autoprefs:1.0.2")
 }
 ```
