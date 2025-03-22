@@ -2,6 +2,7 @@ package com.zahid.autoprefs
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.annotation.VisibleForTesting
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -62,6 +63,12 @@ class AutoPrefs private constructor(private val prefs: SharedPreferences) {
             val prefs = context.getSharedPreferences(name, Context.MODE_PRIVATE)
             return AutoPrefs(prefs)
         }
+
+        @VisibleForTesting
+        fun createForTesting(sharedPreferences: SharedPreferences): AutoPrefs {
+            return AutoPrefs(sharedPreferences)
+        }
+
     }
 
     private val gson = Gson()
