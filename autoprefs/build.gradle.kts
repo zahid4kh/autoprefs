@@ -9,15 +9,26 @@ plugins {
 }
 
 val versionPropsFile = file("version.properties")
+println("Version props file exists: ${versionPropsFile.exists()}")
+println("Version props file path: ${versionPropsFile.absolutePath}")
+
 val versionProps = Properties()
 if (versionPropsFile.exists()) {
     versionProps.load(FileInputStream(versionPropsFile))
+    println("Loaded properties: ${versionProps.propertyNames().toList()}")
 }
 
 val majorVersion = versionProps.getProperty("majorVersion", "1")
 val minorVersion = versionProps.getProperty("minorVersion", "0")
 val patchVersion = versionProps.getProperty("patchVersion", "0")
 val libraryVersion = "$majorVersion.$minorVersion.$patchVersion"
+
+println("========= VERSION INFO =========")
+println("majorVersion: ${versionProps.getProperty("majorVersion", "1")}")
+println("minorVersion: ${versionProps.getProperty("minorVersion", "0")}")
+println("patchVersion: ${versionProps.getProperty("patchVersion", "0")}")
+println("libraryVersion: $libraryVersion")
+println("===============================")
 
 android {
     namespace = "com.zahid.autoprefs"
@@ -72,7 +83,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
-group = "com.zahid"
+group = "io.github.zahid4kh"
 version = libraryVersion
 
 val secretPropsFile = rootProject.file("local.properties")
@@ -84,7 +95,7 @@ if (secretPropsFile.exists()) {
 publishing {
     publications {
         create<MavenPublication>("release") {
-            groupId = "com.zahid"
+            groupId = "io.github.zahid4kh"
             artifactId = "autoprefs"
             version = libraryVersion
 
@@ -140,7 +151,7 @@ tasks.register<Zip>("createBundle") {
     archiveFileName.set("autoprefs-${libraryVersion}-bundle.zip")
     destinationDirectory.set(layout.buildDirectory.dir("distributions"))
 
-    from(file("${System.getProperty("user.home")}/.m2/repository/com/zahid/autoprefs/${libraryVersion}")) {
+    from(file("${System.getProperty("user.home")}/.m2/repository/io/github/zahid4kh/autoprefs/${libraryVersion}")) {
         include("**/*")
     }
 
