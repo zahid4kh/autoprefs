@@ -120,39 +120,33 @@ publishing {
             }
         }
     }
-
-//    repositories {
-//        maven {
-//            name = "localRelease"
-//            url = uri("${layout.buildDirectory}/repos/releases")
-//        }
-//
-//        maven {
-//            name = "OSSRH"
-//            url = uri(
-//                if (version.toString().endsWith("SNAPSHOT")) {
-//                    "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-//                } else {
-//                    "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-//                }
-//            )
-//
-//            credentials {
-//                username = secretProps.getProperty("ossrhUsername", "")
-//                password = secretProps.getProperty("ossrhPassword", "")
-//            }
-//        }
-//    }
 }
 
 signing {
-    val signingKey = secretProps.getProperty("signing.key", "")
+    val signingKeyFile = rootProject.file("private_key.gpg")
     val signingPassword = secretProps.getProperty("signing.password", "")
 
-    if (signingKey.isNotEmpty() && signingPassword.isNotEmpty()) {
-        useInMemoryPgpKeys(signingKey, signingPassword)
+    if (signingKeyFile.exists()) {
+        useInMemoryPgpKeys(signingKeyFile.readText(), signingPassword)
     } else {
         useGpgCmd()
     }
     sign(publishing.publications["release"])
+}
+
+tasks.register<Zip>("createBundle") {
+    dependsOn("assemble", "publishToMavenLocal")
+
+    archiveFileName.set("autoprefs-${libraryVersion}-bundle.zip")
+    destinationDirectory.set(layout.buildDirectory.dir("distributions"))
+
+    from(file("${System.getProperty("user.home")}/.m2/repository/com/zahid/autoprefs/${libraryVersion}")) {
+        include("**/*")
+    }
+
+    doLast {
+        println("====================================")
+        println("Bundle created at: ${archiveFile.get().asFile.absolutePath}")
+        println("====================================")
+    }
 }
