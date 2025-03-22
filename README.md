@@ -1,7 +1,7 @@
 # AutoPrefs
 
 [![](https://jitpack.io/v/zahid4kh/autoprefs.svg)](https://jitpack.io/#zahid4kh/autoprefs)
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.zahid4kh/autoprefs)](https://central.sonatype.org/artifact/com.zahid/autoprefs)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.zahid4kh/autoprefs)](https://central.sonatype.com/artifact/io.github.zahid4kh/autoprefs)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 A lightweight, Kotlin-idiomatic library to simplify working with `SharedPreferences` in Android apps. AutoPrefs eliminates boilerplate by using property delegation, supports type-safe operations, and offers advanced features like custom object serialization and asynchronous writes.
