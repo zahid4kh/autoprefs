@@ -16,7 +16,7 @@ A lightweight, Kotlin-idiomatic library to simplify working with `SharedPreferen
 - **Async Support**: Write preferences asynchronously using coroutines
 - **Easy Setup**: Minimal configuration with sensible defaults
 
-## Installation
+## Installation [](#installation)
 
 ### Option 1: Maven Central
 
@@ -48,7 +48,7 @@ dependencies {
 }  
 ```
 
-## Usage
+## Usage [](#usage)
 
 ### Example android app
 
@@ -161,7 +161,7 @@ demo apk file: [appdemo/autoprefsdemo.apk](appdemo/autoprefsdemo.apk)
 
 
 
-## Testing
+## Testing [](#testing)
 
 AutoPrefs is designed to be easily testable in both unit tests and instrumented tests.
 
