@@ -1,4 +1,5 @@
 import java.io.FileInputStream
+import java.security.MessageDigest
 import java.util.Properties
 
 plugins {
@@ -163,21 +164,48 @@ tasks.register<Zip>("createBundle") {
 }
 
 tasks.register("generateChecksums") {
+    dependsOn("publishToMavenLocal", "signReleasePublication")
+
     doLast {
+        Thread.sleep(1000)
+
         val repoDir = file("${System.getProperty("user.home")}/.m2/repository/io/github/zahid4kh/autoprefs/${libraryVersion}")
+        println("Generating checksums in directory: ${repoDir.absolutePath}")
 
         repoDir.listFiles()?.forEach { file ->
             if (file.isFile && !file.name.endsWith(".md5") && !file.name.endsWith(".sha1")) {
-                // Generate MD5
-                ant.withGroovyBuilder {
-                    "checksum"("file" to file.absolutePath, "algorithm" to "MD5", "fileext" to ".md5")
-                }
+                println("Generating checksums for: ${file.name}")
 
-                // Generate SHA1
-                ant.withGroovyBuilder {
-                    "checksum"("file" to file.absolutePath, "algorithm" to "SHA1", "fileext" to ".sha1")
-                }
+                val md5File = File(file.absolutePath + ".md5")
+                md5File.writeText(generateMD5(file))
+
+                val sha1File = File(file.absolutePath + ".sha1")
+                sha1File.writeText(generateSHA1(file))
             }
         }
     }
+}
+
+fun generateMD5(file: File): String {
+    val md = MessageDigest.getInstance("MD5")
+    file.inputStream().use { input ->
+        val buffer = ByteArray(8192)
+        var read: Int
+        while (input.read(buffer).also { read = it } > 0) {
+            md.update(buffer, 0, read)
+        }
+    }
+    return md.digest().joinToString("") { "%02x".format(it) }
+}
+
+fun generateSHA1(file: File): String {
+    val md = MessageDigest.getInstance("SHA-1")
+    file.inputStream().use { input ->
+        val buffer = ByteArray(8192)
+        var read: Int
+        while (input.read(buffer).also { read = it } > 0) {
+            md.update(buffer, 0, read)
+        }
+    }
+    return md.digest().joinToString("") { "%02x".format(it) }
 }
