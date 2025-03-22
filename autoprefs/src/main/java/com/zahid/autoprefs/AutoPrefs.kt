@@ -64,11 +64,16 @@ class AutoPrefs private constructor(private val prefs: SharedPreferences) {
             return AutoPrefs(prefs)
         }
 
+        /**
+         * Creates an instance of AutoPrefs with the specified SharedPreferences.
+         *
+         * @param sharedPreferences The SharedPreferences instance to use.
+         * @return A new AutoPrefs instance.
+         */
         @VisibleForTesting
         fun createForTesting(sharedPreferences: SharedPreferences): AutoPrefs {
             return AutoPrefs(sharedPreferences)
         }
-
     }
 
     private val gson = Gson()
