@@ -1,7 +1,7 @@
 # AutoPrefs
 
 [![](https://jitpack.io/v/zahid4kh/autoprefs.svg)](https://jitpack.io/#zahid4kh/autoprefs)
-[![Maven Central](https://img.shields.io/maven-central/v/com.zahid/autoprefs)](https://central.sonatype.org/artifact/com.zahid/autoprefs)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.zahid4kh/autoprefs)](https://central.sonatype.org/artifact/com.zahid/autoprefs)
 [![GitHub release](https://img.shields.io/github/v/release/zahid4kh/autoprefs)](https://github.com/zahid4kh/autoprefs/releases)
 [![License](https://img.shields.io/github/license/zahid4kh/autoprefs)](https://github.com/zahid4kh/autoprefs/blob/main/LICENSE.md)
 
