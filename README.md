@@ -161,6 +161,50 @@ demo apk file: [appdemo/autoprefsdemo.apk](appdemo/autoprefsdemo.apk)
 
 
 
+## Testing
+
+AutoPrefs is designed to be easily testable in both unit tests and instrumented tests.
+
+### Testing Options
+
+1. **Unit Tests** - Run on the JVM without needing an Android device
+   - Located in `autoprefs/src/test/java/com/zahid/autoprefs/`
+   - Uses a mock implementation of SharedPreferences
+   - Faster execution, ideal for testing business logic
+
+2. **Instrumented Tests** - Run on an Android device or emulator
+   - Located in `autoprefs/src/androidTest/java/com/zahid/autoprefs/sample/`
+   - Uses actual SharedPreferences implementation
+   - Verifies real-world behavior on Android
+
+### Example Code
+
+- [Unit Tests](autoprefs/src/test/java/com/zahid/autoprefs/AutoPrefsUnitTest.kt): Shows how to test AutoPrefs using a [mock implementation](autoprefs/src/test/java/com/zahid/autoprefs/MockSharedPreferences.kt)
+- [Instrumented Tests](autoprefs/src/androidTest/java/com/zahid/autoprefs/sample/UserSettingsTest.kt): Shows how to test a [class that uses AutoPrefs](autoprefs/src/androidTest/java/com/zahid/autoprefs/sample/UserSettings.kt) on an Android device
+
+### Making Your Code Testable
+
+For best testability, structure your classes to accept an AutoPrefs instance in the constructor:
+
+```kotlin
+class UserSettings {
+    private val prefs: AutoPrefs
+    
+    // production use
+    constructor(context: Context) {
+        prefs = AutoPrefs.create(context, "user_settings")
+    }
+    
+    // testing
+    constructor(testPrefs: AutoPrefs) {
+        prefs = testPrefs
+    }
+    
+    // Rest of your class...
+}
+```
+
+
 ## License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
