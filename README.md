@@ -24,7 +24,7 @@ Add the dependency to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("io.github.zahid4kh:autoprefs:1.0.2")
+    implementation("io.github.zahid4kh:autoprefs:1.0.3")
 }
 ```
 
@@ -44,7 +44,7 @@ Then add the dependency:
 
 ```kotlin
 dependencies {  
-    implementation("com.github.zahid4kh:autoprefs:v1.0.2")
+    implementation("com.github.zahid4kh:autoprefs:v1.0.3")
 }  
 ```
 
